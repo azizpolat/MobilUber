@@ -2,9 +2,9 @@ import CustomerButton from "@/components/CustomerButton";
 import InputField from "@/components/InputField";
 import OAuth from "@/components/OAuth";
 import { icons, images } from "@/constants";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import { useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -13,7 +13,15 @@ const SignUp = () => {
     password: "",
   });
 
-  const onSignUpPress = async () => {};
+  const onSignUpPress = async () => {
+    try {
+      // Asenkron işlemler burada yapılabilir
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      router.replace("/home"); // Yönlendirme
+    } catch (error) {
+      console.error("Kayıt hatası:", error);
+    }
+  };
 
   return (
     <ScrollView
@@ -36,38 +44,34 @@ const SignUp = () => {
             value={form.name}
             onChangeText={(value) => setForm({ ...form, name: value })}
           />
-          <View className="flex">
-            <InputField
-              label="Email"
-              placeholder="Enter your email"
-              icon={icons.person}
-              value={form.email}
-              onChangeText={(value) => setForm({ ...form, email: value })}
-            />
-          </View>
-
+          <InputField
+            label="Email"
+            placeholder="Enter your email"
+            icon={icons.person}
+            value={form.email}
+            onChangeText={(value) => setForm({ ...form, email: value })}
+          />
           <InputField
             label="Password"
-            placeholder="Enter your password"
             rightIcon={icons.passwordopen}
+            placeholder="Enter your password"
             secureTextEntry={true}
             icon={icons.lock}
             value={form.password}
             onChangeText={(value) => setForm({ ...form, password: value })}
           />
           <CustomerButton
-            title="Sing Up"
+            title="Sign Up"
             onPress={onSignUpPress}
             className="mt-6 p-2"
           />
           <OAuth />
-          <Link
-            href="/sign-in"
-            className="text-lg text-center text-general-200 mt-5"
-          >
-            <Text>Alreaddy have an account ? </Text>
-            <Text className="text-primary-500">Log In</Text>
-          </Link>
+          <TouchableOpacity onPress={() => router.push("/sign-in")}>
+            <Text className="text-[15px] text-center text-general-200 mt-4">
+              Already have an account?{" "}
+              <Text className="text-primary-500">Log In</Text>
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -75,14 +79,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-// <SafeAreaView className="flex items-center h-full justify-between bg-white">
-//       <TouchableOpacity
-//         className="w-full flex justify-end items-end p-5"
-//         onPress={() => {
-//           router.replace("/(auth)/welcome");
-//         }}
-//       >
-//         <Text>Skipdsefsf</Text>
-//       </TouchableOpacity>
-//     </SafeAreaView>
