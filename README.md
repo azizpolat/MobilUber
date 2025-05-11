@@ -1,2 +1,2 @@
 
-![simulator_screenshot_497DE069-848A-4FC2-B615-1A1617ABA892](https://github.com/user-attachments/assets/304d7279-72d2-4e9c-aa72-2d8a467eac68)
+![simulator_screenshot_C3B32CCF-234D-49D1-9F36-DEA03C37ED18](https://github.com/user-attachments/assets/79bce03f-8d1e-4d1e-9e7a-380a446cdec2)
