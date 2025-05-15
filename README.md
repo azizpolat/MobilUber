@@ -1,3 +1,3 @@
 
 
-![simulator_screenshot_BF82E371-0C97-4FAC-A8F8-BCAC11619DB6](https://github.com/user-attachments/assets/9ff6ac2d-364a-4149-a6c4-b13bb0d35f26)
+![simulator_screenshot_CD911ADA-16C5-4982-89A2-252514E8EDC3](https://github.com/user-attachments/assets/b79aa6fa-82d2-4e87-b8e8-38bfde5775f6)
