@@ -1,25 +1,51 @@
-import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
-import { Link } from "expo-router";
-import { SafeAreaView, Text, View } from "react-native";
+import RideCard from "@/components/RideCard";
+import { images } from "@/constants";
+import { recentRids } from "@/lib/driversData";
+
+import { useUser } from "@clerk/clerk-expo";
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  SafeAreaView,
+  Text,
+  View,
+} from "react-native";
 
 export default function Page() {
   const { user } = useUser();
 
+  const loading = true;
+
   return (
-    <SafeAreaView>
-      <View>
-        <SignedIn>
-          <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
-        </SignedIn>
-        <SignedOut>
-          <Link href="/(auth)/sign-in">
-            <Text>Sign in</Text>
-          </Link>
-          <Link href="/(auth)/sign-up">
-            <Text>Sign up</Text>
-          </Link>
-        </SignedOut>
-      </View>
+    <SafeAreaView className="bg-general-500">
+      <FlatList
+        className="px-5"
+        keyboardShouldPersistTaps="handled"
+        data={recentRids?.slice(0, 5)}
+        keyExtractor={(item) => item.ride_id}
+        renderItem={({ item }) => <RideCard ride={item} />}
+        contentContainerStyle={{
+          paddingBottom: 100,
+        }}
+        ListEmptyComponent={() => (
+          <View className="flex flex-col items-center justify-center">
+            {!loading ? (
+              <>
+                <Image
+                  className="w-40 h-40"
+                  source={images.noResult}
+                  alt="No Recent rides found"
+                  resizeMode="contain"
+                />
+                <Text className="text-sm">No Recent rides found</Text>
+              </>
+            ) : (
+              <ActivityIndicator className="mt-5" size="small" color="#000" />
+            )}
+          </View>
+        )}
+      />
     </SafeAreaView>
   );
 }

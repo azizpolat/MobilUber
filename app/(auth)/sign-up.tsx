@@ -2,6 +2,7 @@ import CustomerButton from "@/components/CustomerButton";
 import InputField from "@/components/InputField";
 import OAuth from "@/components/OAuth";
 import { icons, images } from "@/constants";
+import { fetchAPI } from "@/lib/fetch";
 import { useSignUp } from "@clerk/clerk-expo";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -57,12 +58,21 @@ const SignUp = () => {
     if (!isLoaded) return;
 
     try {
-      const signUpAttempt = await signUp.attemptEmailAddressVerification({
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
         code: verification.code,
       });
 
-      if (signUpAttempt.status === "complete") {
-        await setActive({ session: signUpAttempt.createdSessionId });
+      if (completeSignUp.status === "complete") {
+        await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        });
+
+        await setActive({ session: completeSignUp.createdSessionId });
         setVerification({ ...verification, state: "success" });
       } else {
         setVerification({
@@ -98,6 +108,7 @@ const SignUp = () => {
           <InputField
             label="Name"
             placeholder="Enter your name"
+            maxLength={20}
             icon={icons.person}
             value={form.name}
             onChangeText={(value) => setForm({ ...form, name: value })}
@@ -147,6 +158,7 @@ const SignUp = () => {
             </Text>
             <InputField
               label="Code"
+              autoFocus={true}
               maxLength={6}
               icon={icons.lock}
               placeholder="123456"
