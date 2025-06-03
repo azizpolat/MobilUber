@@ -6,9 +6,10 @@ import { DriverCardProps } from "@/types/type";
 
 const DriverCard = ({ item, selected, setSelected }: DriverCardProps) => {
   const driver = item;
+  console.log("driversss", driver);
 
-  const isSelected = selected === item.ride_id;
-  console.log("seseefs", selected);
+  const isSelected = selected === item?.ride_id;
+  console.log("secilen", isSelected);
 
   return (
     <TouchableOpacity
