@@ -126,11 +126,14 @@ declare interface LocationStore {
 }
 
 declare interface DriverStore {
-  drivers: MarkerData[];
-  selectedDriver: number | null;
-  setSelectedDriver: (driverId: number) => void;
-  setDrivers: (drivers: MarkerData[]) => void;
-  clearSelectedDriver: () => void;
+  // drivers: MarkerData[];
+  // selectedDriver: number | null;
+  // setSelectedDriver: (driverId: number) => void;
+  // setDrivers: (drivers: MarkerData[]) => void;
+  // clearSelectedDriver: () => void;
+  drivers: DriverType[];
+  selectedDriver: DriverType | null; // ride_id değil, tüm obje
+  setSelectedDriver: (driver: DriverType) => void;
 }
 
 declare interface DriverCardProps {

@@ -6,10 +6,8 @@ import { DriverCardProps } from "@/types/type";
 
 const DriverCard = ({ item, selected, setSelected }: DriverCardProps) => {
   const driver = item;
-  console.log("driversss", driver);
 
-  const isSelected = selected === item?.ride_id;
-  console.log("secilen", isSelected);
+  const isSelected = selected?.id === item?.id;
 
   return (
     <TouchableOpacity
@@ -31,7 +29,7 @@ const DriverCard = ({ item, selected, setSelected }: DriverCardProps) => {
           {driver?.rating} ⭐ | {driver?.car_seats} koltuk
         </Text>
         <Text className="text-sm">
-          ${item?.fare_price} | {formatTime(item?.ride_time ?? 5)}
+          $ {driver?.price} | {formatTime(driver?.time ?? 5)}
         </Text>
       </View>
 

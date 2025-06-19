@@ -19,7 +19,7 @@ const ConfirmRide = () => {
           <DriverCard
             item={item}
             selected={selectedDriver}
-            setSelected={() => setSelectedDriver(item.ride_id)}
+            setSelected={() => setSelectedDriver(item)}
           />
         )}
         ListFooterComponent={

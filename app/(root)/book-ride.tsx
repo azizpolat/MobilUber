@@ -11,12 +11,18 @@ import { StripeProvider } from "@stripe/stripe-react-native";
 
 const BookRide = () => {
   const { user } = useUser();
+
   const { userAddress, destinationAddress } = useLocationStore();
   const { drivers, selectedDriver } = useDriverStore();
 
-  const driverDetails = drivers?.find(
-    (driver) => driver.ride_id === selectedDriver
-  );
+  const driverDetails = selectedDriver;
+  if (!driverDetails) {
+    return (
+      <RideLayout title="Book Ride">
+        <Text className="text-xl font-JakartaSemiBold">No Driver Selected</Text>
+      </RideLayout>
+    );
+  }
 
   return (
     <StripeProvider
@@ -32,7 +38,7 @@ const BookRide = () => {
 
           <View className="flex flex-col w-full items-center justify-center mt-10">
             <Image
-              source={{ uri: driverDetails?.driver?.profile_image_url }}
+              source={{ uri: driverDetails?.profile_image_url }}
               className="w-28 h-28 rounded-full"
             />
 
@@ -48,7 +54,7 @@ const BookRide = () => {
                   resizeMode="contain"
                 />
                 <Text className="text-lg font-JakartaRegular">
-                  {driverDetails?.driver?.rating}
+                  {driverDetails?.rating}
                 </Text>
               </View>
             </View>
@@ -58,7 +64,7 @@ const BookRide = () => {
             <View className="flex flex-row items-center justify-between w-full border-b border-white py-3">
               <Text className="text-lg font-JakartaRegular">Ride Price</Text>
               <Text className="text-lg font-JakartaRegular text-[#0CC25F]">
-                ${driverDetails?.driver?.price}
+                ${driverDetails?.price}
               </Text>
             </View>
 
@@ -72,7 +78,7 @@ const BookRide = () => {
             <View className="flex flex-row items-center justify-between w-full py-3">
               <Text className="text-lg font-JakartaRegular">Car Seats</Text>
               <Text className="text-lg font-JakartaRegular">
-                {driverDetails?.driver?.car_seats}
+                {driverDetails?.car_seats}
               </Text>
             </View>
           </View>
@@ -95,9 +101,9 @@ const BookRide = () => {
           <Payment
             fullName={user?.fullName}
             email={user?.emailAddresses[0].emailAddress}
-            amount={driverDetails.driver?.price!}
-            driverId={driverDetails.driver?.id}
-            rideTime={driverDetails.driver?.time!}
+            amount={parseInt(driverDetails?.price?.toString() || "0")}
+            driverId={driverDetails?.id}
+            rideTime={driverDetails?.time!}
           />
         </>
       </RideLayout>

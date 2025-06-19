@@ -16,7 +16,6 @@ export const fetchAPI = async (url: string, options?: RequestInit) => {
       throw new Error(`Invalid JSON response: ${text.substring(0, 100)}...`);
     }
   } catch (error) {
-    console.error("Fetch error:", error);
     throw error;
   }
 };
@@ -32,6 +31,7 @@ export const useFetch = <T>(url: string, options?: RequestInit) => {
 
     try {
       const result = await fetchAPI(url, options);
+
       setData(result.data);
     } catch (err) {
       setError((err as Error).message);

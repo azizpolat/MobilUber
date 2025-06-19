@@ -4,9 +4,10 @@ import RideCard from "@/components/RideCard";
 import { icons, images } from "@/constants";
 import { recentRids } from "@/lib/driversData";
 import { useLocationStore } from "@/store";
-import { useUser } from "@clerk/clerk-expo";
+import { useAuth, useUser } from "@clerk/clerk-expo";
 import * as Location from "expo-location";
 import { router } from "expo-router";
+
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -21,12 +22,15 @@ import {
 
 export default function Page() {
   const { user } = useUser();
-
+  const { signOut } = useAuth();
   const { setUserLocation, setDestinationLocation } = useLocationStore();
 
   const [hasPermissions, setHasPermissions] = useState(false);
 
-  const handleSignOut = () => {};
+  const handleSignOut = () => {
+    signOut();
+    router.replace("/(auth)/sign-in");
+  };
 
   const handleDestinationPress = (location: {
     latitude: number;
